@@ -14,6 +14,13 @@ import PickResult from './src/pickresult';
 import PlaceLevel from './src/place';
 import WinNum from './src/winnum';
 
+/*
+* 1. 6 개의 Number를 갖고 있는 번호의 묶음 class 모델 정의 ex ) class LottoGame
+* 2. 위에서 정의한 class의 object 가 당첨 유무를 판별할 수 있게
+* 3. 위 class 의 object 가 몇등 인지 확인할 수 
+*/
+
+
 class Number {
   constructor($num){
     this.number = $num
