@@ -14,6 +14,19 @@ import PickResult from './src/pickresult';
 import PlaceLevel from './src/place';
 import WinNum from './src/winnum';
 
+class Number {
+  construct($num){
+    this.number = $num
+  }
+
+  get color(){
+    if(this.number > 0 && this.number <11) {
+      return "yellow"
+    }
+    // .... more codes
+  }
+}
+
 class App extends Component {
   state = {
     appName: 'My Lotto',
