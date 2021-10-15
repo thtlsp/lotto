@@ -27,6 +27,14 @@ class Number {
     // getColor() 사용 시 num.getColor();
     // get color() 사용 시 num.color 사용 가능, 이 점은 get color() 사용 시 초기 리턴된 값이 캐시 됨
   }
+  
+  // compare 코드 
+  compareTo(num){
+    if(typeof num === "number"){
+      return this.number === num;
+    }
+    return this.number === this.num.number
+  }
 }
 
 class App extends Component {
@@ -53,9 +61,11 @@ class App extends Component {
       let bonusbool = false;
 
       for (let i = 0; i < 6; i++) {
-        newNums.push(Math.floor(Math.random() * 45) + 1);
+        const num = new Number(Math.floor(Math.random() * 45) + 1);
+        newNums.push(num);
         for (let j = 0; j < i; j++) {
-          if (newNums[i] === newNums[j]) {
+          // compare method 사용
+          if (newNums[i].compareTo(newNums[j])) {
             newNums.pop();
             i--;
           }
