@@ -10,16 +10,19 @@ import React from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
 const PickResult = props => {
-  const {picknum} = props;
+  // const {picknum} = props;
   return (
     <View style={styles.resultView}>
       <ScrollView onMomentumScrollBegin={() => props.picklotto(1)}>
         <Text style={styles.mainText}>{props.pickcount}회 당첨결과</Text>
-        {picknum.map((item, idx) => (
-          <Text key={idx} style={{ backgroundColor : item.color }}>{item.number}</Text>
+        {/* {picknum.map((item, idx) => (
+          <Text key={idx} style={{backgroundColor: item.color}}>
+            {item.number}
+          </Text>
+        ))} */}
+        {props.picknum.map((item, idx) => (
+          <Text key={idx}>{item}</Text>
         ))}
-        {/* <Text style={styles.numlist}>{props.picknum.}</Text> */}
-        {/* <Text style={styles.numlist}>{props.picknum.join()}</Text> */}
       </ScrollView>
     </View>
   );

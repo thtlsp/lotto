@@ -15,34 +15,33 @@ import PlaceLevel from './src/place';
 import WinNum from './src/winnum';
 
 /*
-* 1. 6 개의 Number를 갖고 있는 번호의 묶음 class 모델 정의 ex ) class LottoGame
-* 2. 위에서 정의한 class의 object 가 당첨 유무를 판별할 수 있게
-* 3. 위 class 의 object 가 몇등 인지 확인할 수 
-*/
+ * 1. 6 개의 Number를 갖고 있는 번호의 묶음 class 모델 정의 ex ) class LottoGame
+ * 2. 위에서 정의한 class의 object 가 당첨 유무를 판별할 수 있게
+ * 3. 위 class 의 object 가 몇등 인지 확인할 수
+ */
 
+// class Number {
+//   constructor($num) {
+//     this.number = $num;
+//   }
 
-class Number {
-  constructor($num){
-    this.number = $num
-  }
+//   get color() {
+//     if (this.number > 0 && this.number < 11) {
+//       return 'yellow';
+//     }
+//     // .... more codes
+//     // getColor() 사용 시 num.getColor();
+//     // get color() 사용 시 num.color 사용 가능, 이 점은 get color() 사용 시 초기 리턴된 값이 캐시 됨
+//   }
 
-  get color(){
-    if(this.number > 0 && this.number <11) {
-      return "yellow"
-    }
-    // .... more codes
-    // getColor() 사용 시 num.getColor();
-    // get color() 사용 시 num.color 사용 가능, 이 점은 get color() 사용 시 초기 리턴된 값이 캐시 됨
-  }
-  
-  // compare 코드 
-  compareTo(num){
-    if(typeof num === "number"){
-      return this.number === num;
-    }
-    return this.number === this.num.number
-  }
-}
+//   // compare 코드
+//   compareTo(num) {
+//     if (typeof num === 'number') {
+//       return this.number === num;
+//     }
+//     return this.number === this.num.number;
+//   }
+// }
 
 class App extends Component {
   state = {
@@ -58,45 +57,61 @@ class App extends Component {
     cost: 0,
     pickNums: [],
   };
-  
-  createNumbers = () => {
-    // 숫자 랜덤 생성
-    // while 을 사용 하는 방법
-    while(newNums.length < 7){
-      const n = Math.floor(Math.random() * 45) + 1;
-      if(!newNums.find(obj => obj.compareTo(n))){ //찾지 못 했을 경우에만 추가함
-        newNums.push(new Number(n));
-      }
-    }
 
-    // for을 사용하는 방법
-    for (let i = 0; i < 6; i++) {
-      const num = new Number(Math.floor(Math.random() * 45) + 1);
-      newNums.push(num);
-      for (let j = 0; j < i; j++) {
-        // compare method 사용
-        if (newNums[i].compareTo(newNums[j])) {
-          newNums.pop();
-          i--;
-        }
-      }
-    }
-    // 순자 정렬
-    newNums.sort((a, b) => {
-      return a.number - b.number;
-    });
-    return newNums;
-  }
+  // createNumbers = () => {
+  //   // 숫자 랜덤 생성
+  //   // while 을 사용 하는 방법
+  //   // while (newNums.length < 7) {
+  //   //   const n = Math.floor(Math.random() * 45) + 1;
+  //   //   if (!newNums.find(obj => obj.compareTo(n))) {
+  //   //     //찾지 못 했을 경우에만 추가함
+  //   //     newNums.push(new Number(n));
+  //   //   }
+  //   // }
+  //   let newNums = [];
+  //   // for을 사용하는 방법
+  //   for (let i = 0; i < 6; i++) {
+  //     const num = new Number(Math.floor(Math.random() * 45) + 1);
+  //     newNums.push(num);
+  //     for (let j = 0; j < i; j++) {
+  //       // compare method 사용
+  //       if (newNums[i].compareTo(newNums[j])) {
+  //         newNums.pop();
+  //         i--;
+  //       }
+  //     }
+  //   }
+  //   // 순자 정렬
+  //   newNums.sort((a, b) => {
+  //     return a.number - b.number;
+  //   });
+  //   return newNums;
+  // };
 
   pickNum = n => {
     let PlaceCount = [0, 0, 0, 0, 0];
     for (let x = 0; x < n; x++) {
       // 횟수에 따른 반복문
-      let newNums = this.createNumbers();
+      //let newNums = this.createNumbers();
+      let newNums = []; // 원본
       let equalCount = 0;
       let bonusbool = false;
 
-      
+      // 원본 -------
+      for (let i = 0; i < 6; i++) {
+        newNums.push(Math.floor(Math.random() * 45) + 1);
+        for (let j = 0; j < i; j++) {
+          if (newNums[i] === newNums[j]) {
+            newNums.pop();
+            i--;
+          }
+        }
+      }
+      newNums.sort((a, b) => {
+        return a - b;
+      });
+      // -----------
+
       this.setState({
         pickNums: newNums,
       });
