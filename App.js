@@ -24,6 +24,8 @@ class Number {
       return "yellow"
     }
     // .... more codes
+    // getColor() 사용 시 num.getColor();
+    // get color() 사용 시 num.color 사용 가능, 이 점은 get color() 사용 시 초기 리턴된 값이 캐시 됨
   }
 }
 
