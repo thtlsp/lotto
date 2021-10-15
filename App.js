@@ -15,7 +15,7 @@ import PlaceLevel from './src/place';
 import WinNum from './src/winnum';
 
 class Number {
-  construct($num){
+  constructor($num){
     this.number = $num
   }
 
@@ -51,31 +51,45 @@ class App extends Component {
     cost: 0,
     pickNums: [],
   };
+  
+  createNumbers = () => {
+    // 숫자 랜덤 생성
+    // while 을 사용 하는 방법
+    while(newNums.length < 7){
+      const n = Math.floor(Math.random() * 45) + 1;
+      if(!newNums.find(obj => obj.compareTo(n))){ //찾지 못 했을 경우에만 추가함
+        newNums.push(new Number(n));
+      }
+    }
+
+    // for을 사용하는 방법
+    for (let i = 0; i < 6; i++) {
+      const num = new Number(Math.floor(Math.random() * 45) + 1);
+      newNums.push(num);
+      for (let j = 0; j < i; j++) {
+        // compare method 사용
+        if (newNums[i].compareTo(newNums[j])) {
+          newNums.pop();
+          i--;
+        }
+      }
+    }
+    // 순자 정렬
+    newNums.sort((a, b) => {
+      return a.number - b.number;
+    });
+    return newNums;
+  }
 
   pickNum = n => {
     let PlaceCount = [0, 0, 0, 0, 0];
     for (let x = 0; x < n; x++) {
       // 횟수에 따른 반복문
-      let newNums = [];
+      let newNums = this.createNumbers();
       let equalCount = 0;
       let bonusbool = false;
 
-      for (let i = 0; i < 6; i++) {
-        const num = new Number(Math.floor(Math.random() * 45) + 1);
-        newNums.push(num);
-        for (let j = 0; j < i; j++) {
-          // compare method 사용
-          if (newNums[i].compareTo(newNums[j])) {
-            newNums.pop();
-            i--;
-          }
-        }
-      }
-      // 숫자 랜덤 생성
-      newNums.sort((a, b) => {
-        return a - b;
-      });
-      // 순자 정렬
+      
       this.setState({
         pickNums: newNums,
       });
